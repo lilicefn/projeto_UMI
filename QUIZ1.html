@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Personalidade Marinha</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz de Personalidade Marinha</h1>
+        
+        <!-- Quiz Section -->
+        <div id="quiz-section">
+            <div class="progress" id="progress">Pergunta 1 de 10</div>
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+            <button class="next-btn" id="next-btn" disabled>Próxima</button>
+        </div>
+        <!-- Result Section -->
+        <div id="result-section" class="hidden">
+            <div class="result" id="result"></div>
+            <button class="restart-btn" onclick="restartQuiz()">Refazer Quiz</button>
+        </div>
+    </div>
+    <script>
+        const perguntas = [
+            "1. Qual seria o seu habitat perfeito?",
+            "2. Como você reage ao estresse?",
+            "3. Como você descreveria sua personalidade em uma palavra?",
+            "4. Qual seu passatempo favorito?",
+            "5. Em um grupo de amigos, você é…",
+            "6. Qual dessas frases combina mais com você?",
+            "7. Como você lida com mudanças?",
+            "8. Qual seria seu superpoder?",
+            "9. O que mais valoriza nas relações?",
+            "10. O que te recarrega quando está cansado?"
+        ];
+        const opcoes = console.log('Carregando pergunta:', currentQuestionIndex + 1); // Debug
+            const question = perguntas[currentQuestionIndex];
+            const currentOptions = opcoes[currentQuestionIndex];
+            selectedOption = null;
+            if (!question || !currentOptions) {
+                console.error('Erro: Pergunta ou opções não encontradas!');
+                return;
+            }
+            questionEl.textContent = question;
+            progressEl.textContent = `Pergunta ${currentQuestionIndex + 1} de ${perguntas.length}`;
+            optionsEl.innerHTML = '';
+            currentOptions.forEach((opcao) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'option';
+                optionEl.textContent = opcao;
+                optionEl.onclick = () => selectOption(optionEl, opcao.charAt(0));
+                optionsEl.appendChild(optionEl);
+            });
+            nextBtn.disabled = true;
+            nextBtn.textContent = currentQuestionIndex === perguntas.length - 1 ? 'Ver Resultado' : 'Próxima';
+        function selectOption(optionEl, letter) {
+            console.log('Opção selecionada:', letter); // Debug
+            // Remove seleção anterior
+            document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+            // Seleciona a nova
+            optionEl.classList.add('selected');
+            selectedOption = letter;
+            nextBtn.disabled = false;
+        }
+        function nextQuestion(){
+            if (!selectedOption) {
+                alert('Por favor, selecione uma opção antes de continuar!');
+                return;
+            }
+            console.log('Pontuando:', selectedOption); // Debug
+        }
